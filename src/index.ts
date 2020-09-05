@@ -1,12 +1,23 @@
-import { rectangle } from "./rectangle";
+import { Rectangle as rect } from "./rectangle";
 
+function solveRect(l, b) {
+    console.log("Solving for rectangle with l = "
+        + l + " and b = " + b);
+    rect(l, b, (err, rectangle) => {
+        if (err) {
+            console.log("ERROR: ", err.message);
+        }
+        else {
+            console.log("The area of the rectangle of dimensions l = "
+                + l + " and b = " + b + " is " + rectangle.area());
+            console.log("The perimeter of the rectangle of dimensions l = "
+                + l + " and b = " + b + " is " + rectangle.perimeter());
+        }
+    });
+    console.log("This statement after the call to rect()");
+};
 
-function solveRect(x, y) {
-    console.log("area:", rectangle.area(x, y));
-    console.log("perimeter", rectangle.perimeter(x, y));
-}
-
-solveRect(2,2);
-solveRect(2,4);
-solveRect(2,5);
-solveRect(3,2);
+solveRect(-2, 2);
+solveRect(2, 4);
+solveRect(2, -5);
+solveRect(3, 2);
