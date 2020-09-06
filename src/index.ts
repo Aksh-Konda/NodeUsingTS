@@ -4,6 +4,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
 import dishRouter from './routes/dishRouter';
+import promoRouter from 'routes/promoRouter';
+import leaderRouter from 'routes/leaderRouter';
 
 const hostname = 'localhost';
 const port = 3000;
@@ -12,13 +14,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-app.all('/dishes', (req, res, next) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    next();
-});
-
 app.use('/dishes', dishRouter);
+app.use('/dishes', promoRouter);
+app.use('/dishes', leaderRouter);
 
 app.use(express.static(__dirname+'/../public'));
 app.use((req, res, next) => {
