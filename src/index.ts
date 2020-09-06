@@ -22,28 +22,25 @@ const server = http.createServer((req, res) => {
                     fs.createReadStream(filePath).pipe(res);
                 }
                 else {
-                    res.statusCode = 404;
-                    res.setHeader('Content-Type', 'text/html');
-                    res.end('<html><body><h1>Error 404: </h1><h3>' + fileUrl +
-                        ' not found</h3></body></html>');
+                    fillStatus404(res, fileUrl + ' not found');
                 }
             });
         }
         else {
-            res.statusCode = 404;
-            res.setHeader('Content-Type', 'text/html');
-            res.end('<html><body><h1>Error 404: </h1><h3>' + fileUrl + 
-                ' not an HTML file</h3></body></html>');
+            fillStatus404(res, fileUrl + ' not an HTML file');
         }
     }
     else {
-        res.statusCode = 404;
-        res.setHeader('Content-Type', 'text/html');
-        res.end('<html><body><h1>Error 404: </h1><h3>' + req.method + 
-            ' not supported</h3></body></html>');
+        fillStatus404(res, req.method + ' not supported');
     }
 });
 
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}`);
 });
+
+function fillStatus404(res: http.ServerResponse, err: string) {
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/html');
+    res.end('<html><body><h1>Error 404: </h1><h3>' + err + '</h3></body></html>');
+}
